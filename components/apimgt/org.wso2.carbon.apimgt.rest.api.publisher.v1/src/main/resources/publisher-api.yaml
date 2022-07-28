@@ -6769,6 +6769,45 @@ paths:
       operationId: getSettings
 
   ######################################################
+  # The Tenant config resource APIs
+  ######################################################
+  /tenant-config:
+    get:
+      tags:
+        - Tenant Config
+      summary: Export a tenant-Config.
+      description: |
+        This operation can be used to export a tenant-config.json used in deployment.
+      operationId: exportTenantConfig
+      responses:
+        200:
+          description: |
+            OK.
+            Tenant config Exported Successfully.
+          headers:
+            Content-Type:
+              description: |
+                The content type of the body.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - OAuth2Security:
+            - apim:admin
+      x-code-samples:
+        - lang: Curl
+          source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8"
+          "https://127.0.0.1:9443/api/am/publisher/v3/tenant-config" > tenant-config.json'
+  ######################################################
   # The tenant resource APIs
   ######################################################
   /tenants:
